@@ -1,0 +1,37 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Post {
+  id: Int!
+  title: String!
+  votes: Int
+}
+
+type Author {
+  id: Int!
+  firstName: String
+  lastName: String
+  posts: [Post!]!
+}
+
+type AuthorEdge {
+  cursor: String!
+  node: Author!
+}
+
+type Query {
+  sayHello: String!
+  findAllAuthor: [Author!]!
+  author(id: Int!): Author!
+}
+
+type Mutation {
+  createAuthor(createAuthorInput: CreateAuthorInput!): Author!
+  upvotePost(postId: Int!): Post!
+}
+
+input CreateAuthorInput {
+  firstName: String
+  lastName: String
+}

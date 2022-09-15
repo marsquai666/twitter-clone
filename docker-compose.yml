@@ -1,0 +1,37 @@
+services:
+  nestapp_prod:
+    build:
+      context: ./nest-app
+      target: production
+    ports:
+      - 3991:3000
+    volumes:
+      - ./nest-app:/nest-app
+  nestapp_dev:
+    build:
+      context: ./nest-app
+      target: development
+    ports:
+      - 3992:3000
+    volumes:
+      - ./nest-app:/nest-app
+    tty: true
+    ports:
+      - 3992:3000
+  db:
+    image: postgres:14.3
+    environment:
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DB=sample
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+  admin:
+    image: adminer
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    restart: always
