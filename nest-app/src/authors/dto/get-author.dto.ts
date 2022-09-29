@@ -4,7 +4,7 @@ import { PaginationArgs } from 'src/common/dto/pagination-args.dto';
 
 @ArgsType()
 export class GetAuthorArgs extends PaginationArgs {
-  @Field({ nullable: true , description: '名前'})
+  @Field({ nullable: true, description: '名前' })
   firstName?: string;
 
   @Field({ defaultValue: '', description: '苗字' })

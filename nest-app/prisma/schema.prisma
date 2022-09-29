@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fieldReference", "filteredRelationCount", "orderByNulls"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // Primary Key
+  id String @id @default(cuid())
+  // メールアドレス
+  email String
+  passwordHash String @map("password_hash")
+  passwordSalt String @map("password_salt")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
+  isActive Boolean @default(true) @map("is_active")
+  isActivated Boolean @map("is_activated")
+
+  tweets Tweet[]
+
+  @@unique([email, isActive, isActivated])
+  @@unique([id, isActive, isActivated])
+}
+
+model Tweet {
+  id String @id @default(cuid())
+  text String @db.VarChar(256)
+  favoriteCount Int @map("favorite_count")
+  replyCount Int @map("reply_count")
+  retweetCount Int @map("retweet_count")
+  isDeleted Boolean @map("is_deleted")
+  authorId String @map("author_id")
+  retweetTargetId String? @map("retweet_target_id")
+  replyTargetId String? @map("reply_target_id")
+
+  author User @relation(fields: [authorId], references: [id])
+  retweetTargetTweet Tweet? @relation("Retweet", fields: [retweetTargetId], references: [id])
+  retweetedTweets Tweet[] @relation("Retweet")
+  replyTargetTweet Tweet? @relation("Reply",fields: [replyTargetId], references: [id])
+  replyedTweets Tweet[] @relation("Reply")
+}

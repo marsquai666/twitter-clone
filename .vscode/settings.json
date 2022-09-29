@@ -7,5 +7,10 @@
     "javascript",
     "typescript"
   ],
-  "editor.tabSize": 4
+  "editor.tabSize": 2,
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true
 }

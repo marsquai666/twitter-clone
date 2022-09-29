@@ -6,7 +6,13 @@ type Post {
   id: Int!
   title: String!
   votes: Int
+  created: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Author {
   id: Int!
@@ -20,18 +26,56 @@ type AuthorEdge {
   node: Author!
 }
 
+"""ユーザーの基本情報を管理するクラス"""
+type User {
+  """ユーザー識別子"""
+  id: ID!
+  email: String!
+
+  """ユーザー作成日時"""
+  createdAt: DateTime!
+
+  """最終ログイン日時"""
+  updatedAt: DateTime!
+}
+
+"""ユーザーが投稿したツイート"""
+type Tweet {
+  id: String!
+  text: String!
+  favoriteCount: Float!
+  replyCount: Float!
+  retweetCount: Float!
+  isDeleted: Boolean!
+  authorId: String!
+  retweetTargetId: String
+  replyTargetId: String
+}
+
 type Query {
   sayHello: String!
   findAllAuthor: [Author!]!
   author(id: Int!): Author!
+  getUser: User!
+
+  """指定されたidを識別子に持つツイートを取得"""
+  fetchTweet(id: String!): Tweet!
+
+  """全てのツイートを取得"""
+  fetchTweetsAll: [Tweet!]!
 }
 
 type Mutation {
   createAuthor(createAuthorInput: CreateAuthorInput!): Author!
   upvotePost(postId: Int!): Post!
+  postTweet(input: PostTweetInput!): Tweet!
 }
 
 input CreateAuthorInput {
   firstName: String
   lastName: String
+}
+
+input PostTweetInput {
+  text: String!
 }

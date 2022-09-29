@@ -16,10 +16,8 @@ services:
     volumes:
       - ./nest-app:/nest-app
     tty: true
-    ports:
-      - 3992:3000
   db:
-    image: postgres:14.3
+    image: postgres:15beta4-bullseye
     environment:
       - POSTGRES_PASSWORD=example
       - POSTGRES_DB=sample
