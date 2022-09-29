@@ -2,18 +2,18 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { AuthorsService } from './authors/authors.service';
 import { AppResolver } from './app.resolver';
 import { AuthorsModule } from './authors/authors.module';
 import { UsersModule } from './users/users.module';
 import { TweetsModule } from './tweets/tweets.module';
-import { PrismaModule } from './prisma/prisma.module';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { AuthModule } from './auth/auth.module';
 import { AccountsModule } from './accounts/accounts.module';
+import { FilterModule } from './common/filters/filter.module';
 
 @Module({
   imports: [
+    FilterModule,
     AuthorsModule,
     UsersModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
